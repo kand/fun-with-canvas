@@ -1,0 +1,8 @@
+#dotCanvas {
+  border: 1px solid black;
+}
+
+button.active {
+  background-color: #00ff00;
+  color: #fff;
+}
