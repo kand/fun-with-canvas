@@ -1,0 +1,17 @@
+{
+  "name": "image-actionizer",
+  "version": "0.0.0",
+  "hompage": "https://github.com/kand/image-actionizer",
+  "authors": [
+    "Andrew Kos <akos123@gmail.com>"
+  ],
+  "description": "Create interactive images.",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
