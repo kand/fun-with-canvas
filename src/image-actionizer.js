@@ -1,25 +1,64 @@
-var canvas = document.getElementById('dotCanvas');
-var $canvas = $(canvas);
-var context = canvas.getContext('2d');
+(function ($, Path2D) {
+  'use strict';
 
-var dotsApp = angular.module('dotsApp', []);
-
-var getCursorPosition = function($event) {
-  var x;
-  var y;
-  var canoffset = $canvas.offset();
-
-  return {
-    x: $event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft - Math.floor(canoffset.left),
-    y: $event.clientY + document.body.scrollTop + document.documentElement.scrollTop - Math.floor(canoffset.top) + 1
-  };
-};
-
-dotsApp.controller('DotsController', function ($scope) {
-  $scope.drawingModes = {
+  var drawingModes = {
     DOTS: 'dots',
     FREE: 'free'
   };
+
+  var getCursorPosition = function($event) {
+    var x;
+    var y;
+    var canoffset = this.$canvas.offset();
+
+    return {
+      x: event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft - Math.floor(canoffset.left),
+      y: event.clientY + document.body.scrollTop + document.documentElement.scrollTop - Math.floor(canoffset.top) + 1
+    };
+  };
+
+  var ImageActionizer = function (canvas) {
+    this.canvas = canvas;
+    this.$canvas = $(canvas);
+    this.context = canvas.getContext('2d');
+
+    this.drawMode = drawingModes.DOTS;
+
+    this.currPath = null;
+    this.drawingLine = false;
+
+    this.paths = [];
+    this.dots = [];
+  };
+
+  ImageActionizer.prototype.startFreeDraw = function (event) {
+    if (this.drawMode === drawingModes.FREE) {
+      var pos = getCursorPosition(event);
+      this.currPath = new Path2D();
+      this.currPath.moveTo(pos.x, pos.y);
+      this.drawingLine = true;
+    }
+  };
+
+  ImageActionizer.prototype.doFreeDraw = function (event) {
+    var pos = getCursorPosition(event);
+    this.currPath = -1;
+    for (var i = 0; i < $scope.paths.length; i++) {
+      if (context.isPointInPath($scope.paths[i], pos.x, pos.y)) {
+        $scope.inPath = i;
+      }
+    }
+
+    if ($scope.drawMode === $scope.drawingModes.FREE && $scope.drawingLine) {
+      currPath.lineTo(pos.x, pos.y);
+      context.stroke(currPath);
+    }
+  };
+
+  return ImageActionizer;
+})(jQuery, Path2D);
+
+dotsApp.controller('DotsController', function ($scope) {
 
   $scope.drawMode = $scope.drawingModes.DOTS;
 
