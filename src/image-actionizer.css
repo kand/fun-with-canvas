@@ -1,0 +1,7 @@
+.image-actionizer {
+  position: relative;
+}
+
+.image-actionizer canvas {
+  position: absolute;
+}

@@ -3,14 +3,21 @@
     <title>Image Actionizer Example</title>
 
     <link rel="stylesheet" type="text/css" href="example.css">
+    <link rel="stylesheet" href="../src/image-actionizer.css" type="text/css">
   </head>
 
   <body>
     <div>
-      <canvas
-          width="500"
-          height="500">
-      </canvas>
+      <div
+          id="imageContainer"
+          class="image-actionizer">
+      </div>
+      <div>
+        <input
+            id="imageSetter"
+            type="file"
+            accept="image/*">
+      </div>
       <div>
         <button id="clearBtn">
           CLEAR
@@ -23,15 +30,19 @@
     <script type="text/javascript" src="../src/image-actionizer.js"></script>
     <script>
       $(document).ready(function () {
-        var $canvas = $('canvas');
+        var $container = $('#imageContainer');
         var $currPath = $('#currPath');
-        var imageActionizer = new ImageActionizer($canvas[0]);
+        var imageActionizer = new ImageActionizer($container[0]);
 
         $('#clearBtn').on('click', function () {
           imageActionizer.clearCanvas();
         });
 
-        $canvas.on('ImageActionizer:PathChanged', function (e) {
+        $('#imageSetter').on('change', function () {
+          imageActionizer.setImage(this.files[0]);
+        });
+
+        $container.on('ImageActionizer:PathChanged', function (e) {
           $currPath.html('old: ' + e.originalEvent.detail.oldPath + ', new: ' + e.originalEvent.detail.newPath);
         });
       });
