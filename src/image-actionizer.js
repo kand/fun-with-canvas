@@ -9,7 +9,7 @@ var ImageActionizer = (function (
   var getCursorPosition = function($event, $canvas) {
     var x;
     var y;
-    var canoffset = $canvas.offset();
+    var canoffset = $(canvas).offset();
 
     return {
       x: event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft - Math.floor(canoffset.left),
@@ -99,7 +99,7 @@ var ImageActionizer = (function (
 
   ImageActionizer.prototype.clearCanvas = function () {
     this.paths = [];
-    this.context.clearRect(0, 0, this.context.width, this.context.height);
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   };
 
   return ImageActionizer;
