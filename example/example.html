@@ -17,13 +17,17 @@
             id="imageSetter"
             type="file"
             accept="image/*">
+        <button id="clearBtn">Clear Actions</button>
+        <button id="saveBtn" disabled>Save</button>
       </div>
-      <div>
-        <button id="clearBtn">
-          CLEAR
-        </button>
-        <span id="currPath"></span>
-      </div>
+      <form id="pathDetailsForm">
+        <div>Path Details</div>
+        <div>
+          <label for="pathDetailsId">ID:</label>
+          <input name="pathDetailsId" type="text">
+        </div>
+        <button type="submit">Done</button>
+      </form>
     </div>
 
     <script src="../node_modules/jquery/dist/jquery.js"></script>
@@ -32,8 +36,13 @@
     <script>
       $(document).ready(function () {
         var $container = $('#imageContainer');
-        var $currPath = $('#currPath');
-        var imageActionizer = new ImageActionizer($container[0]);
+        var $pathDetailsForm = $('#pathDetailsForm');
+        var imageActionizer = new ImageActionizer($container);
+
+        var clearPathDetailsForm = function () {
+          $pathDetailsForm.hide();
+          $pathDetailsForm[0].reset();
+        };
 
         $('#clearBtn').on('click', function () {
           imageActionizer.clearCanvas();
@@ -43,9 +52,30 @@
           imageActionizer.setImage(this.files[0]);
         });
 
-        $container.on('ImageActionizer:PathChanged', function (e) {
-          $currPath.html('old: ' + e.originalEvent.detail.oldPath + ', new: ' + e.originalEvent.detail.newPath);
+        $pathDetailsForm.submit(function (e) {
+          e.preventDefault();
+
+          var $this = $(this);
+          var path = $this.data('path');
+          if (path) {
+            var formData = $this.serializeArray().reduce(function (retObj, point) {
+              retObj[point.name] = point.value;
+              return retObj;
+            }, {});
+            if (formData.pathDetailsId) {
+              $(path).attr('id', formData.pathDetailsId);
+            }
+          }
+
+          clearPathDetailsForm();
         });
+
+        $container
+          .on('ImageActionizer:StartEditPathDetails', function (e, path) {
+            $pathDetailsForm.data('path', path);
+            $pathDetailsForm.show();
+          })
+          .on('ImageActionizer:StopEditPathDetails', clearPathDetailsForm);
       });
     </script>
   </body>
