@@ -1,0 +1,26 @@
+{
+  "name": "image-actionizer",
+  "version": "0.0.0",
+  "description": "Crate interactive images.",
+  "directories": {
+    "example": "example",
+    "lib": "src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kand/image-actionizer.git"
+  },
+  "author": "Andrew Kos <akos123@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kand/image-actionizer/issues"
+  },
+  "homepage": "https://github.com/kand/image-actionizer",
+  "devDependencies": {
+    "bower": "^1.4.1"
+  },
+  "dependencies": {
+    "canvas2svg": "git://github.com/gliffy/canvas2svg.git",
+    "jquery": "^2.1.4"
+  }
+}

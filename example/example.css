@@ -1,8 +1,10 @@
-canvas {
+
+svg {
   border: 1px solid black;
+  left: 0;
+  position: absolute;
 }
 
-button.active {
-  background-color: #00ff00;
-  color: #fff;
+#pathDetailsForm {
+  display: none;
 }
