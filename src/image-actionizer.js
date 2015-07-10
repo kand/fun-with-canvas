@@ -27,6 +27,10 @@ var ImageActionizer = (function (
   };
 
   ImageActionizer.prototype.setImage = function (file) {
+    if (this.image && this.image.src) {
+      URL.revokeObjectURL(this.image.src);
+    }
+
     this.image.src = URL.createObjectURL(file);
 
     this.resizeCanvas();
