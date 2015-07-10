@@ -2,6 +2,13 @@
   position: relative;
 }
 
-.image-actionizer canvas {
+.image-actionizer svg {
+  height: 100%;
+  left: 0;
   position: absolute;
+  width: 100%;
+}
+
+#imageContainer img {
+  width: 100%;
 }
