@@ -1,8 +1,18 @@
 
-svg {
+#imageContainer {
+  max-width: 500px;
+}
+
+#imageContainer svg {
   border: 1px solid black;
+  height: 100%;
   left: 0;
   position: absolute;
+  width: 100%;
+}
+
+#imageContainer img {
+  width: 100%;
 }
 
 #pathDetailsForm {
