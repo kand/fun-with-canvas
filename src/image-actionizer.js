@@ -2,8 +2,10 @@ var ImageActionizer = (function (
     $,
     Path2D,
     CustomEvent,
+    FileReader,
     URL,
-    SVGCanvas) {
+    SVGCanvas,
+    Zipper) {
   'use strict';
 
   var getCursorPosition = function($event, $canvas) {
@@ -31,6 +33,7 @@ var ImageActionizer = (function (
       URL.revokeObjectURL(this.image.src);
     }
 
+    this.rawFile = file;
     this.image.src = URL.createObjectURL(file);
 
     this.resizeCanvas();
@@ -102,5 +105,22 @@ var ImageActionizer = (function (
     this.$imageContainer.trigger('ImageActionizer:StopEditPathDetails');
   };
 
+  ImageActionizer.prototype.save = function () {
+    var reader = new FileReader();
+
+    var self = this;
+    reader.onloadend = function () {
+      var zip = new Zipper();
+      zip.file('regions.svg', self.context.getSerializedSvg());
+      zip.file('image', reader.result, {binary: true});
+
+      var content = zip.generate({type: 'blob'});
+
+      saveAs(content, 'image.actionized');
+    };
+
+    reader.readAsBinaryString(this.rawFile);
+  };
+
   return ImageActionizer;
-})(jQuery, Path2D, CustomEvent, URL, C2S);
+})(jQuery, Path2D, CustomEvent, FileReader, URL, C2S, JSZip);

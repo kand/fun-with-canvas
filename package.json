@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "canvas2svg": "git://github.com/gliffy/canvas2svg.git",
-    "jquery": "^2.1.4"
+    "jquery": "^2.1.4",
+    "jszip": "git://github.com/Stuk/jszip.git"
   }
 }

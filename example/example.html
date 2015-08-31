@@ -18,7 +18,7 @@
             type="file"
             accept="image/*">
         <button id="clearBtn">Clear Actions</button>
-        <button id="saveBtn" disabled>Save</button>
+        <button id="saveBtn">Save</button>
       </div>
       <form id="pathDetailsForm">
         <div>Path Details</div>
@@ -32,6 +32,9 @@
 
     <script src="../node_modules/jquery/dist/jquery.js"></script>
     <script src="../node_modules/canvas2svg/canvas2svg.js"></script>
+    <script src="../node_modules/jszip/dist/jszip.js"></script>
+    <script src="../node_modules/jszip/vendor/FileSaver.js"></script>
+
     <script type="text/javascript" src="../src/image-actionizer.js"></script>
     <script>
       $(document).ready(function () {
@@ -46,6 +49,10 @@
 
         $('#clearBtn').on('click', function () {
           imageActionizer.clearCanvas();
+        });
+
+        $('#saveBtn').on('click', function () {
+          imageActionizer.save();
         });
 
         $('#imageSetter').on('change', function () {
