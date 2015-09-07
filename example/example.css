@@ -1,10 +1,6 @@
 
-#imageContainer {
+.image-actionizer-container {
   max-width: 500px;
-}
-
-#imageContainer svg {
-  border: 1px solid black;
 }
 
 #pathDetailsForm {

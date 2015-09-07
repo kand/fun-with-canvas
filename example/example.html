@@ -3,14 +3,15 @@
     <title>Image Actionizer Example</title>
 
     <link rel="stylesheet" type="text/css" href="styles/example.css">
-    <link rel="stylesheet" href="styles/edit/image-actionizer-edit.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="styles/shared/image-actionizer.css">
   </head>
 
   <body>
     <div>
+      <h3>Edit Image</h3>
       <div
           id="imageContainer"
-          class="image-actionizer">
+          class="image-actionizer-container">
       </div>
       <div>
         <input
@@ -30,13 +31,32 @@
       </form>
     </div>
 
+    <div>
+      <h3>Load Image</h3>
+      <div
+          id="actionizedImageContainer"
+          class="image-actionizer-container">
+      </div>
+      <div>
+        <input
+            id="actionizedImageLoader"
+            type="file"
+            accept="application/zip">
+      </div>
+    </div>
+
     <script src="d/jquery/dist/jquery.js"></script>
     <script src="d/canvas2svg/canvas2svg.js"></script>
     <script src="d/jszip/dist/jszip.js"></script>
     <script src="d/jszip/vendor/FileSaver.js"></script>
 
+    <script type="text/javascript" src="scripts/shared/utils.js"></script>
+
     <script type="text/javascript" src="scripts/edit/image-actionizer-edit.js"></script>
     <script src="scripts/setup-edit.js"></script>
+
+    <script type="text/javascript" src="scripts/action/image-actionizer-action.js"></script>
+    <script src="scripts/setup-action.js"></script>
   </body>
 
 </html>

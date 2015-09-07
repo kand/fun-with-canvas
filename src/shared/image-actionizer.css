@@ -1,14 +1,14 @@
-.image-actionizer {
+.image-actionizer-container {
   position: relative;
 }
 
-.image-actionizer svg {
+.image-actionizer-container svg {
   height: 100%;
   left: 0;
   position: absolute;
   width: 100%;
 }
 
-#imageContainer img {
+.image-actionizer-container img {
   width: 100%;
 }

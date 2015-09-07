@@ -1,8 +1,11 @@
-;(function (ImageActionizer) {
+;(function (
+  $,
+  ImageActionizerEditor
+) {
   $(document).ready(function () {
     var $container = $('#imageContainer');
     var $pathDetailsForm = $('#pathDetailsForm');
-    var imageActionizer = new ImageActionizer($container);
+    var imageActionizer = new ImageActionizerEditor($container);
 
     var clearPathDetailsForm = function () {
       $pathDetailsForm.hide();
@@ -40,10 +43,13 @@
     });
 
     $container
-      .on('ImageActionizer:StartEditPathDetails', function (e, path) {
+      .on('ImageActionizer:Editor:StartEditPathDetails', function (e, path) {
         $pathDetailsForm.data('path', path);
         $pathDetailsForm.show();
       })
-      .on('ImageActionizer:StopEditPathDetails', clearPathDetailsForm);
+      .on('ImageActionizer:Editor:StopEditPathDetails', clearPathDetailsForm);
   });
-})(ImageActionizer);
+})(
+  jQuery,
+  ImageActionizerEditor
+);

@@ -1,25 +1,16 @@
-var ImageActionizer = (function (
+var ImageActionizerEditor = (function (
+    Utils,
     $,
     Path2D,
     CustomEvent,
     FileReader,
     URL,
     SVGCanvas,
-    Zipper) {
+    Zipper
+) {
   'use strict';
 
-  var getCursorPosition = function($event, $canvas) {
-    var x;
-    var y;
-    var canoffset = $canvas.offset();
-
-    return {
-      x: event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft - Math.floor(canoffset.left),
-      y: event.clientY + document.body.scrollTop + document.documentElement.scrollTop - Math.floor(canoffset.top) + 1
-    };
-  };
-
-  var ImageActionizer = function (imageContainer) {
+  var ImageActionizerEditor = function (imageContainer) {
     this.$imageContainer = $(imageContainer);
 
     this.inPath = null;
@@ -28,7 +19,7 @@ var ImageActionizer = (function (
     this.setupElements();
   };
 
-  ImageActionizer.prototype.setImage = function (file) {
+  ImageActionizerEditor.prototype.setImage = function (file) {
     if (this.image && this.image.src) {
       URL.revokeObjectURL(this.image.src);
     }
@@ -39,7 +30,7 @@ var ImageActionizer = (function (
     this.resizeCanvas();
   };
 
-  ImageActionizer.prototype.setupElements = function () {
+  ImageActionizerEditor.prototype.setupElements = function () {
     this.context = new SVGCanvas();
     this.$canvas = $(this.context.getSvg());
     this.$canvas.height(0);
@@ -58,27 +49,27 @@ var ImageActionizer = (function (
     this.$imageContainer.append(this.image);
   };
 
-  ImageActionizer.prototype.resizeCanvas = function () {
+  ImageActionizerEditor.prototype.resizeCanvas = function () {
     this.$canvas.height(this.image.height);
     this.$canvas.width(this.image.width);
   };
 
-  ImageActionizer.prototype.startFreeDraw = function (event) {
-    var pos = getCursorPosition(event, this.$canvas);
+  ImageActionizerEditor.prototype.startFreeDraw = function (event) {
+    var pos = Utils.getCursorPosition(event, this.$canvas);
     this.context.beginPath();
     this.context.moveTo(pos.x, pos.y);
     this.drawingLine = true;
   };
 
-  ImageActionizer.prototype.doFreeDraw = function (event) {
+  ImageActionizerEditor.prototype.doFreeDraw = function (event) {
     if (this.drawingLine) {
-      var pos = getCursorPosition(event, this.$canvas);
+      var pos = Utils.getCursorPosition(event, this.$canvas);
       this.context.lineTo(pos.x, pos.y);
       this.context.stroke();
     }
   };
 
-  ImageActionizer.prototype.stopFreeDraw = function (event) {
+  ImageActionizerEditor.prototype.stopFreeDraw = function (event) {
     if (this.drawingLine) {
       this.context.closePath();
       this.context.fillStyle = 'rgba(255, 0, 0, 0.5)';
@@ -88,7 +79,7 @@ var ImageActionizer = (function (
     }
   };
 
-  ImageActionizer.prototype.clearCanvas = function () {
+  ImageActionizerEditor.prototype.clearCanvas = function () {
     this.stopFreeDraw();
     this.stopEditPathDetails();
 
@@ -97,30 +88,29 @@ var ImageActionizer = (function (
     this.context.restore();
   };
 
-  ImageActionizer.prototype.startEditPathDetails = function (e) {
-    this.$imageContainer.trigger('ImageActionizer:StartEditPathDetails', e.target);
+  ImageActionizerEditor.prototype.startEditPathDetails = function (e) {
+    this.$imageContainer.trigger('ImageActionizer:Editor:StartEditPathDetails', e.target);
   };
 
-  ImageActionizer.prototype.stopEditPathDetails = function () {
-    this.$imageContainer.trigger('ImageActionizer:StopEditPathDetails');
+  ImageActionizerEditor.prototype.stopEditPathDetails = function () {
+    this.$imageContainer.trigger('ImageActionizer:Editor:StopEditPathDetails');
   };
 
-  ImageActionizer.prototype.save = function () {
-    var reader = new FileReader();
-    
-    var self = this;
-    reader.onloadend = function () {
-      var zip = new Zipper();
-      zip.file('regions.svg', self.context.getSerializedSvg());
-      zip.file('image', reader.result, {binary: true});
-
-      var content = zip.generate({type: 'blob'});
-
-      saveAs(content, 'image.actionized');
-    };
-
-    reader.readAsBinaryString(this.rawFile);
+  ImageActionizerEditor.prototype.save = function () {
+    Utils.image.save({
+      svg: this.context.getSerializedSvg(),
+      imageFile: this.rawFile
+    });
   };
 
-  return ImageActionizer;
-})(jQuery, Path2D, CustomEvent, FileReader, URL, C2S, JSZip);
+  return ImageActionizerEditor;
+})(
+  ImageActionizerUtils,
+  jQuery,
+  Path2D,
+  CustomEvent,
+  FileReader,
+  URL,
+  C2S,
+  JSZip
+);
