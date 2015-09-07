@@ -9,18 +9,23 @@ gulp.task('del:tmp', function () {
 gulp.task('copy:prep', ['del:tmp']);
 
 gulp.task('copy:src:js', ['copy:prep'], function () {
-  return gulp.src('src/*.js')
+  return gulp.src('src/**/*.js')
     .pipe(gulp.dest('.tmp/pre-dist/scripts'));
 });
 
 gulp.task('copy:src:styles', ['copy:prep'], function () {
-  return gulp.src('src/*.css')
+  return gulp.src('src/**/*.css')
     .pipe(gulp.dest('.tmp/pre-dist/styles'));
 });
 
 gulp.task('copy:example:html', ['copy:prep'], function () {
   return gulp.src('example/*.html')
     .pipe(gulp.dest('.tmp/pre-dist'));
+});
+
+gulp.task('copy:example:js', ['copy:prep'], function () {
+  return gulp.src('example/*.js')
+    .pipe(gulp.dest('.tmp/pre-dist/scripts'));
 });
 
 gulp.task('copy:example:styles', ['copy:prep'], function () {
@@ -35,6 +40,7 @@ gulp.task('copy:src', [
 
 gulp.task('copy:example', [
   'copy:example:html',
+  'copy:example:js',
   'copy:example:styles'
 ]);
 
