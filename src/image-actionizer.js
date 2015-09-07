@@ -107,7 +107,7 @@ var ImageActionizer = (function (
 
   ImageActionizer.prototype.save = function () {
     var reader = new FileReader();
-
+    
     var self = this;
     reader.onloadend = function () {
       var zip = new Zipper();

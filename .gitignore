@@ -1,3 +1,7 @@
+# mac garbage
 .DS_Store
+
+# temp project folders
+.tmp
 bower_components
 node_modules
