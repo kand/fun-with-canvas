@@ -64,12 +64,10 @@ gulp.task('connect', ['connect:prep'], function () {
 });
 
 gulp.task('watch', ['connect'], function () {
-  gulp.watch(['src/**'], ['copy:src'])
-    .on('change', function () {
-      connect.reload();
-    });
-
-  gulp.watch(['example/**'], ['copy:example'])
+  gulp.watch(['**'], [
+    'copy:src',
+    'copy:example'
+  ])
     .on('change', function () {
       connect.reload();
     });

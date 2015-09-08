@@ -27,6 +27,7 @@ var ImageActionizerEditor = (function (
     this.rawFile = file;
     this.image.src = URL.createObjectURL(file);
 
+    this.clearCanvas();
     this.resizeCanvas();
   };
 
@@ -100,6 +101,24 @@ var ImageActionizerEditor = (function (
     Utils.image.save({
       svg: this.context.getSerializedSvg(),
       imageFile: this.rawFile
+    });
+  };
+
+  ImageActionizerEditor.prototype.load = function (file) {
+    var self = this;
+    Utils.image.load({
+      file: file,
+      success: function (data) {
+        self.image.src = data.image;
+
+        self.clearCanvas();
+
+        self.context.save();
+        self.$canvas.children('g').html(data.svg.children('g').html());
+        self.context.restore();
+
+        self.resizeCanvas();
+      }
     });
   };
 

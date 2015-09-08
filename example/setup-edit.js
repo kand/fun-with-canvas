@@ -24,6 +24,10 @@
       imageActionizer.setImage(this.files[0]);
     });
 
+    $('#imageLoader').on('change', function () {
+      imageActionizer.load(this.files[0]);
+    });
+
     $pathDetailsForm.submit(function (e) {
       e.preventDefault();
 
